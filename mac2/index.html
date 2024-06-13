@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dynamic Website</title>
+        <style>
+            body {
+                background-image: url(assignment02_images/backgrounds/night.png);
+                background-attachment: fixed;
+                background-position: center;
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+            }
+
+            #figure {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: absolute;
+                bottom: 0;
+                right: 18%;
+
+            }
+
+            h1 {
+                color: white;
+                font-size: 3.5em;
+            }
+
+            p {
+                width: fit-content;
+                padding: 1%;
+                border-color: lightgray;
+                border-style: solid;
+                border-radius: 25px;
+                background-color: lightgray;
+                text-align: center;
+                opacity: 80%;
+            }
+
+            #info {
+                font-family: Arial, Helvetica, sans-serif;
+                margin-left: 2%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="info">
+            <h1>Everything is <span id="greeting">XXXX</span>!</h1>
+            <p id="salut">The time is currently <span id="time">XX:YY ZM</span></p>
+            <p id="lucky"></p>
+        </div>
+        <div id="figure">
+            <img id="head" src="assignment02_images/heads/head1.png">
+            <img id="body" src="assignment02_images/bodies/body1.png">  
+        </div>
+    </body>
+    <script>
+
+        // ask the user for a positive number greater than or equal to 3
+
+        let usrRand = prompt("Provide a positive number, greater than or equal to 3.");
+        while(isNaN(parseInt(usrRand)) == true || parseInt(usrRand) < 3) {
+            usrRand = prompt("Your selected number does not fit the requirements. Provide a positive number, greater than or equal to 3.");
+        }
+
+        // randomize page heading
+
+        let randGreet = parseInt(Math.random() * 7);
+        console.log(randGreet);
+        const words = ['Awesome', 'Cool', 'Fun', 'Good', 'Swell', 'Perfect', 'Excellent'];
+        let greeting = document.querySelector('#greeting');
+        greeting.textContent = words[randGreet];
+        
+
+        // tell the user the time of day - provide the appropriate greeting
+        // change the background image based on the time of day
+
+        let time = document.querySelector('#time');
+        let body = document.querySelector('body');
+        let salut = "";
+    
+        let now = new Date();
+        console.log(now.getHours());
+        if(now.getHours() < 6 && now.getMinutes() <=59) {
+            salut = " - Good Night!";
+            body.style.backgroundImage = 'url(assignment02_images/backgrounds/night.png)';
+        }
+        else if(now.getHours() > 5 && now.getHours() < 12 && now.getMinutes() <=59) {
+            salut = " - Good Morning!";
+            body.style.backgroundImage = 'url(assignment02_images/backgrounds/morning.png)';
+        }
+        else if(now.getHours() > 11 && now.getHours() < 18 && now.getMinutes() <=59) {
+            salut = " - Good Afternoon!";
+            body.style.backgroundImage = 'url(assignment02_images/backgrounds/afternoon.png)';
+        }
+        else if(now.getHours() > 17 && now.getHours() < 24 && now.getMinutes() <=59) {
+            salut = " - Good Evening!";
+            body.style.backgroundImage = 'url(assignment02_images/backgrounds/evening.png)';
+        }
+
+        let currHours = now.getHours();
+        let merid = "AM";
+        if(currHours >= 12) {
+            if(currHours != 12) {
+                currHours = currHours % 12;
+            }
+            merid = "PM";
+        }
+        if(currHours == 0) {
+            currHours = 12;
+        }
+        let currMins = now.getMinutes();
+        if(currMins < 10) {
+            currMins = `0${currMins}`;
+        }
+
+        time.textContent = `${currHours}:${currMins} ${merid} ${salut}`;
+
+        
+        // pick three lucky numbers between 1 and the number the user selected
+        // in the first prompt
+        let lucky = document.querySelector('#lucky');
+        let first, second, third;
+
+        do {
+            first = parseInt(Math.random() * usrRand) + 1;
+            second = parseInt(Math.random() * usrRand) + 1;
+            third = parseInt(Math.random() * usrRand) + 1;
+
+        } while(first == second || first == third || second == third);
+
+        
+        
+        lucky.textContent += `Your lucky random numbers today are ${first}, ${second}, and ${third}!`;
+
+        // randomize the lego mini figure 
+
+        let head = document.querySelector('#head');
+        let heads = ['assignment02_images/heads/head1.png', 'assignment02_images/heads/head2.png', 'assignment02_images/heads/head3.png', 'assignment02_images/heads/head4.png', 'assignment02_images/heads/head5.png', 'assignment02_images/heads/head6.png'];
+
+        let bod = document.querySelector('#body');
+        let bodies = ['assignment02_images/bodies/body1.png', 'assignment02_images/bodies/body2.png', 'assignment02_images/bodies/body3.png', 'assignment02_images/bodies/body4.png', 'assignment02_images/bodies/body5.png', 'assignment02_images/bodies/body6.png'];
+
+        let randFig = parseInt(Math.random() * 6);
+        head.src = heads[randFig];
+        bod.src = bodies[randFig];
+
+        
+
+
+    </script>
+</html>
